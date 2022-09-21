@@ -1,0 +1,33 @@
+@startuml command
+class RedoCommand [[java:usantatecla.mastermind.views.RedoCommand]] {
+	~RedoCommand(PlayController playController)
+	#void execute()
+	#boolean isActive()
+}
+class Command [[java:usantatecla.mastermind.views.Command]] {
+}
+Command <|-- RedoCommand
+abstract class Command [[java:usantatecla.mastermind.views.Command]] {
+	#PlayController playController
+	#Command(String title, PlayController playController)
+}
+class "usantatecla.utils.Command" as usantatecla_utils_Command [[java:usantatecla.utils.Command]] {
+}
+usantatecla_utils_Command <|-- Command
+class ProposeCombinationCommand [[java:usantatecla.mastermind.views.ProposeCombinationCommand]] {
+	~ProposeCombinationCommand(PlayController playController)
+	#void execute()
+	#boolean isActive()
+}
+class Command [[java:usantatecla.mastermind.views.Command]] {
+}
+Command <|-- ProposeCombinationCommand
+class UndoCommand [[java:usantatecla.mastermind.views.UndoCommand]] {
+	~UndoCommand(PlayController playController)
+	#void execute()
+	#boolean isActive()
+}
+class Command [[java:usantatecla.mastermind.views.Command]] {
+}
+Command <|-- UndoCommand
+@enduml

@@ -1,0 +1,113 @@
+@startuml dispatchers
+class StateDispatcher [[java:usantatecla.mastermind.distributed.dispatchers.StateDispatcher]] {
+	+StateDispatcher(PlayController playController)
+	+void dispatch()
+}
+class Dispatcher [[java:usantatecla.mastermind.distributed.dispatchers.Dispatcher]] {
+}
+Dispatcher <|-- StateDispatcher
+abstract class Dispatcher [[java:usantatecla.mastermind.distributed.dispatchers.Dispatcher]] {
+	#AcceptorController acceptorController
+	+Dispatcher(AcceptorController acceptorController)
+	+{abstract}void dispatch()
+	+void associate(TCPIP tcpip)
+}
+class TCPIP [[java:usantatecla.mastermind.distributed.dispatchers.TCPIP]] {
+}
+Dispatcher --> "2" TCPIP : tcpip
+class DispatcherPrototype [[java:usantatecla.mastermind.distributed.dispatchers.DispatcherPrototype]] {
+	-Map<FrameType,Dispatcher> dispatcherMap
+	+DispatcherPrototype()
+	+void add(FrameType frameType, Dispatcher dispatcher)
+	+void dispatch(FrameType frameType)
+	+void serve()
+}
+class TCPIP [[java:usantatecla.mastermind.distributed.dispatchers.TCPIP]] {
+}
+DispatcherPrototype --> "2" TCPIP : tcpip
+class IsLooserDispatcher [[java:usantatecla.mastermind.distributed.dispatchers.IsLooserDispatcher]] {
+	+IsLooserDispatcher(PlayController playController)
+	+void dispatch()
+}
+class Dispatcher [[java:usantatecla.mastermind.distributed.dispatchers.Dispatcher]] {
+}
+Dispatcher <|-- IsLooserDispatcher
+class StartDispatcher [[java:usantatecla.mastermind.distributed.dispatchers.StartDispatcher]] {
+	+StartDispatcher(StartController startController)
+	+void dispatch()
+}
+class Dispatcher [[java:usantatecla.mastermind.distributed.dispatchers.Dispatcher]] {
+}
+Dispatcher <|-- StartDispatcher
+class GetResultDispatcher [[java:usantatecla.mastermind.distributed.dispatchers.GetResultDispatcher]] {
+	+GetResultDispatcher(PlayController playController)
+	+void dispatch()
+}
+class Dispatcher [[java:usantatecla.mastermind.distributed.dispatchers.Dispatcher]] {
+}
+Dispatcher <|-- GetResultDispatcher
+class ResumeDispatcher [[java:usantatecla.mastermind.distributed.dispatchers.ResumeDispatcher]] {
+	+ResumeDispatcher(ResumeController resumeController)
+	+void dispatch()
+}
+class Dispatcher [[java:usantatecla.mastermind.distributed.dispatchers.Dispatcher]] {
+}
+Dispatcher <|-- ResumeDispatcher
+class AddProposedCombinationDispatcher [[java:usantatecla.mastermind.distributed.dispatchers.AddProposedCombinationDispatcher]] {
+	+AddProposedCombinationDispatcher(PlayController playController)
+	+void dispatch()
+}
+class Dispatcher [[java:usantatecla.mastermind.distributed.dispatchers.Dispatcher]] {
+}
+Dispatcher <|-- AddProposedCombinationDispatcher
+class IsWinnerDispatcher [[java:usantatecla.mastermind.distributed.dispatchers.IsWinnerDispatcher]] {
+	+IsWinnerDispatcher(PlayController playController)
+	+void dispatch()
+}
+class Dispatcher [[java:usantatecla.mastermind.distributed.dispatchers.Dispatcher]] {
+}
+Dispatcher <|-- IsWinnerDispatcher
+class TCPIP [[java:usantatecla.mastermind.distributed.dispatchers.TCPIP]] {
+	+{static}TCPIP createClientSocket()
+	+{static}TCPIP createServerSocket()
+	+TCPIP(Socket socket)
+	+TCPIP(ServerSocket serverSocket, Socket socket)
+	+void close()
+}
+class "usantatecla.utils.TCPIP" as usantatecla_utils_TCPIP [[java:usantatecla.utils.TCPIP]] {
+}
+usantatecla_utils_TCPIP <|-- TCPIP
+class ContinueStateDispatcher [[java:usantatecla.mastermind.distributed.dispatchers.ContinueStateDispatcher]] {
+	+ContinueStateDispatcher(PlayController playController)
+	+void dispatch()
+}
+class Dispatcher [[java:usantatecla.mastermind.distributed.dispatchers.Dispatcher]] {
+}
+Dispatcher <|-- ContinueStateDispatcher
+class GetProposedCombinationDispatcher [[java:usantatecla.mastermind.distributed.dispatchers.GetProposedCombinationDispatcher]] {
+	+GetProposedCombinationDispatcher(PlayController playController)
+	+void dispatch()
+}
+class Dispatcher [[java:usantatecla.mastermind.distributed.dispatchers.Dispatcher]] {
+}
+Dispatcher <|-- GetProposedCombinationDispatcher
+class GetAttemptsDispatcher [[java:usantatecla.mastermind.distributed.dispatchers.GetAttemptsDispatcher]] {
+	+GetAttemptsDispatcher(PlayController playController)
+	+void dispatch()
+}
+class Dispatcher [[java:usantatecla.mastermind.distributed.dispatchers.Dispatcher]] {
+}
+Dispatcher <|-- GetAttemptsDispatcher
+
+' this are for positioning dispatchers, not defining relationships
+StateDispatcher -[hidden]-> IsLooserDispatcher
+ResumeDispatcher -[hidden]-> AddProposedCombinationDispatcher
+IsWinnerDispatcher -[hidden]-> ContinueStateDispatcher
+IsLooserDispatcher -[hidden]-> GetProposedCombinationDispatcher
+GetResultDispatcher -[hidden]-> GetAttemptsDispatcher
+GetAttemptsDispatcher -[hidden]-> StartDispatcher
+ContinueStateDispatcher -[hidden]-> StateDispatcher
+StartDispatcher -[hidden]-> GetResultDispatcher
+GetAttemptsDispatcher -[hidden]-> ResumeDispatcher
+
+@enduml

@@ -1,0 +1,91 @@
+@startuml
+abstract class PlayController [[java:usantatecla.mastermind.controllers.PlayController]] {
+	+PlayController(Session session)
+	+void accept(ControllerVisitor controllerVisitor)
+	+{abstract}void undo()
+	+{abstract}void redo()
+	+{abstract}boolean undoable()
+	+{abstract}boolean redoable()
+	+{abstract}boolean isWinner()
+	+{abstract}boolean isLooser()
+	+{abstract}int getAttempts()
+	+{abstract}ProposedCombination getProposedCombination(int i)
+	+{abstract}Result getResult(int i)
+	+{abstract}void addProposedCombination(ProposedCombination proposedCombination)
+	+{abstract}void continueState()
+}
+class AcceptorController [[java:usantatecla.mastermind.controllers.AcceptorController]] {
+}
+AcceptorController <|-- PlayController
+class RedoController [[java:usantatecla.mastermind.controllers.RedoController]] {
+	-SessionImplementation sessionImplementation
+	+RedoController(Session session)
+	+void redo()
+	+boolean redoable()
+}
+class Controller [[java:usantatecla.mastermind.controllers.Controller]] {
+}
+Controller <|-- RedoController
+class GameController [[java:usantatecla.mastermind.controllers.GameController]] {
+	-SessionImplementation sessionImplementation
+	+GameController(Session session)
+	+int getAttempts()
+	+void addProposedCombination(ProposedCombination proposedCombination)
+	+boolean isWinner()
+	+boolean isLooser()
+	+ProposedCombination getProposedCombination(int i)
+	+Result getResult(int i)
+	+void continueState()
+}
+class Controller [[java:usantatecla.mastermind.controllers.Controller]] {
+}
+Controller <|-- GameController
+abstract class AcceptorController [[java:usantatecla.mastermind.controllers.AcceptorController]] {
+	~AcceptorController(Session session)
+	+{abstract}void accept(ControllerVisitor controllerVisitor)
+}
+class Controller [[java:usantatecla.mastermind.controllers.Controller]] {
+}
+Controller <|-- AcceptorController
+abstract class ResumeController [[java:usantatecla.mastermind.controllers.ResumeController]] {
+	+ResumeController(Session session)
+	+{abstract}void resume(boolean newGame)
+	+void accept(ControllerVisitor controllerVisitor)
+}
+class AcceptorController [[java:usantatecla.mastermind.controllers.AcceptorController]] {
+}
+AcceptorController <|-- ResumeController
+abstract class Controller [[java:usantatecla.mastermind.controllers.Controller]] {
+	#Session session
+	~Controller(Session session)
+	+StateValue getValueState()
+}
+class UndoController [[java:usantatecla.mastermind.controllers.UndoController]] {
+	-SessionImplementation sessionImplementation
+	+UndoController(Session session)
+	+void undo()
+	+boolean undoable()
+}
+class Controller [[java:usantatecla.mastermind.controllers.Controller]] {
+}
+Controller <|-- UndoController
+class Logic [[java:usantatecla.mastermind.controllers.Logic]] {
+	#Session session
+	#Map<StateValue,AcceptorController> acceptorControllers
+	#Logic()
+	+AcceptorController getController()
+}
+interface ControllerVisitor [[java:usantatecla.mastermind.controllers.ControllerVisitor]] {
+	void visit(StartController startController)
+	void visit(PlayController playController)
+	void visit(ResumeController resumeController)
+}
+abstract class StartController [[java:usantatecla.mastermind.controllers.StartController]] {
+	+StartController(Session session)
+	+{abstract}void start()
+	+void accept(ControllerVisitor controllerVisitor)
+}
+class AcceptorController [[java:usantatecla.mastermind.controllers.AcceptorController]] {
+}
+AcceptorController <|-- StartController
+@enduml

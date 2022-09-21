@@ -1,0 +1,144 @@
+@startuml pkt_mastermind_models
+abstract class Combination [[java:usantatecla.mastermind.models.Combination]] {
+	-{static}int WIDTH
+	+Combination()
+	+Combination(String ordinals)
+	+{static}int getWidth()
+	+String toString()
+}
+class Color [[java:usantatecla.mastermind.models.Color]] {
+}
+Combination --> "*" Color : colors
+class Memento [[java:usantatecla.mastermind.models.Memento]] #GreenYellow {
+	-int attemps
+	~Memento(List<ProposedCombination> proposedCombinations, List<Result> results, int attemps)
+	-void cloneProposedCombinations(List<ProposedCombination> proposedCombinations)
+	-void cloneResults(List<Result> results)
+	~List<ProposedCombination> getProposedCombinations()
+	~List<Result> getResults()
+	~int getAttempts()
+}
+class ProposedCombination [[java:usantatecla.mastermind.models.ProposedCombination]] {
+}
+Memento --> "*" ProposedCombination : proposedCombinations
+class Result [[java:usantatecla.mastermind.models.Result]] {
+}
+Memento --> "*" Result : results
+class Result [[java:usantatecla.mastermind.models.Result]] {
+	-int blacks
+	-int whites
+	+Result(int blacks, int whites)
+	~boolean isWinner()
+	+int getBlacks()
+	+int getWhites()
+}
+class State [[java:usantatecla.mastermind.models.State]] {
+	-StateValue stateValue
+	+State()
+	+void reset()
+	+void next()
+	+StateValue getValueState()
+}
+class Game [[java:usantatecla.mastermind.models.Game]] {
+	-{static}int MAX_LONG
+	-int attempts
+	+Game()
+	+void newGame()
+	+void addProposedCombination(ProposedCombination proposedCombination)
+	+boolean isLooser()
+	+boolean isWinner()
+	+int getAttempts()
+	+ProposedCombination getProposedCombination(int position)
+	+Result getResult(int position)
+	+SecretCombination getSecretCombination()
+	~Memento createMemento()
+	~void set(Memento memento)
+}
+class SecretCombination [[java:usantatecla.mastermind.models.SecretCombination]] {
+}
+Game --> "1" SecretCombination : secretCombination
+class ProposedCombination [[java:usantatecla.mastermind.models.ProposedCombination]] {
+}
+Game --> "*" ProposedCombination : proposedCombinations
+class Result [[java:usantatecla.mastermind.models.Result]] {
+}
+Game --> "*" Result : results
+class Registry [[java:usantatecla.mastermind.models.Registry]] #GreenYellow {
+	-ArrayList<Memento> mementoList
+	-int firstPrevious
+	~Registry(Game game)
+	~void registry()
+	~void undo(Game game)
+	~void redo(Game game)
+	~boolean undoable()
+	~boolean redoable()
+	~void reset()
+}
+class Game [[java:usantatecla.mastermind.models.Game]] {
+}
+Registry --> "1" Game : game
+class SecretCombination [[java:usantatecla.mastermind.models.SecretCombination]] {
+	~SecretCombination()
+	+SecretCombination(SecretCombination secretCombination)
+	~Result getResult(ProposedCombination proposedCombination)
+	+void copy(SecretCombination secretCombination)
+}
+class Combination [[java:usantatecla.mastermind.models.Combination]] {
+}
+Combination <|-- SecretCombination
+enum Color [[java:usantatecla.mastermind.models.Color]] {
+	RED
+	BLUE
+	YELLOW
+	GREEN
+	ORANGE
+	PURPLE
+	~{static}int length()
+}
+enum Error [[java:usantatecla.mastermind.models.Error]] {
+	DUPLICATED
+	WRONG_CHARACTERS
+	WRONG_LENGTH
+	NULL
+	+boolean isNull()
+}
+class SessionImplementation [[java:usantatecla.mastermind.models.SessionImplementation]] {
+	+SessionImplementation()
+	+void next()
+	+boolean undoable()
+	+boolean redoable()
+	+void undo()
+	+void redo()
+	+StateValue getValueState()
+	+void newGame()
+	+int getAttemps()
+	+boolean isWinner()
+	+boolean isLooser()
+	+void addProposedCombination(ProposedCombination proposedCombination)
+	+ProposedCombination getProposedCombination(int i)
+	+Result getResult(int i)
+}
+class State [[java:usantatecla.mastermind.models.State]] {
+}
+SessionImplementation --> "1" State : state
+class Game [[java:usantatecla.mastermind.models.Game]] {
+}
+SessionImplementation --> "1" Game : game
+SessionImplementation --> "1" Registry : registry
+interface Session [[java:usantatecla.mastermind.models.Session]] {
+}
+Session <|.. SessionImplementation
+class ProposedCombination [[java:usantatecla.mastermind.models.ProposedCombination]] {
+	+ProposedCombination(String combination)
+	+ProposedCombination()
+	~boolean contains(Color color, int position)
+	~boolean contains(Color color)
+	+List<Color> getColors()
+}
+class Combination [[java:usantatecla.mastermind.models.Combination]] {
+}
+Combination <|-- ProposedCombination
+interface Session [[java:usantatecla.mastermind.models.Session]] {
+	StateValue getValueState()
+}
+@enduml

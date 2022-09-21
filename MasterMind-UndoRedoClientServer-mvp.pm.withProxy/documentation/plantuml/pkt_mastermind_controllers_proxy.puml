@@ -1,0 +1,60 @@
+@startuml pkt_mastermind_controllers_proxy
+
+package mastermind.distributed {
+
+class SessionProxy [[java:usantatecla.mastermind.distributed.SessionProxy]]
+class StartControllerProxy [[java:usantatecla.mastermind.distributed.StartControllerProxy]] {
+	-TCPIP tcpip
+	+StartControllerProxy(Session session, TCPIP tcpip)
+	+void start()
+}
+class PlayControllerProxy [[java:usantatecla.mastermind.distributed.PlayControllerProxy]] {
+	-TCPIP tcpip
+	~PlayControllerProxy(Session session, TCPIP tcpip)
+	+void undo()
+	+void redo()
+	+boolean undoable()
+	+boolean redoable()
+	+boolean isWinner()
+	+boolean isLooser()
+	+int getAttempts()
+	+ProposedCombination getProposedCombination(int i)
+	+Result getResult(int i)
+	+void addProposedCombination(ProposedCombination proposedCombination)
+	+void continueState()
+}
+class ResumeControllerProxy [[java:usantatecla.mastermind.distributed.ResumeControllerProxy]] {
+	-TCPIP tcpip
+	+ResumeControllerProxy(Session session, TCPIP tcpip)
+	+void resume(boolean newGame)
+}
+class LogicProxy [[java:usantatecla.mastermind.distributed.LogicProxy]] {
+	-TCPIP tcpip
+	+LogicProxy()
+	+void close()
+}
+class LogicProxy [[java:usantatecla.mastermind.distributed.LogicProxy]] {
+}
+}
+
+package mastermind.controllers {
+	class ResumeController [[java:usantatecla.mastermind.controllers.ResumeController]] 
+	class PlayController [[java:usantatecla.mastermind.controllers.PlayController]] 
+	class StartController [[java:usantatecla.mastermind.controllers.StartController]] 
+	class Logic [[java:usantatecla.mastermind.controllers.Logic]] 
+
+}
+
+ResumeController <|-- ResumeControllerProxy
+PlayController <|-- PlayControllerProxy
+StartController <|-- StartControllerProxy
+Logic <|-- LogicProxy
+
+package mastermind.models {
+	interface Session [[java:usantatecla.mastermind.models.Session]] 
+}
+
+Session <|.. SessionProxy
+
+
+@enduml

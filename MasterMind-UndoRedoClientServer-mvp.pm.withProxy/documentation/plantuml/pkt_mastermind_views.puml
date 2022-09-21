@@ -1,0 +1,125 @@
+@startuml pkt_mastermind_views
+class ErrorView [[java:usantatecla.mastermind.views.ErrorView]] {
+	+{static}String[] MESSAGES
+	#Error error
+	~ErrorView(Error error)
+	+void writeln()
+}
+class Console [[java:usantatecla.utils.Console]] {
+}
+Console <|-- ErrorView
+class View [[java:usantatecla.mastermind.views.View]] {
+	+View()
+	+void interact(AcceptorController acceptorController)
+	+void visit(StartController startController)
+	+void visit(PlayController playController)
+	+void visit(ResumeController resumeController)
+}
+class StartView [[java:usantatecla.mastermind.views.StartView]] {
+}
+View --> "1" StartView : startView
+class PlayView [[java:usantatecla.mastermind.views.PlayView]] {
+}
+View --> "1" PlayView : playView
+class ResumeView [[java:usantatecla.mastermind.views.ResumeView]] {
+}
+View --> "1" ResumeView : resumeView
+interface ControllerVisitor [[java:usantatecla.mastermind.controllers.ControllerVisitor]] {
+}
+ControllerVisitor <|.. View
+class ResultView [[java:usantatecla.mastermind.views.ResultView]] {
+	-Result result
+	~ResultView(Result result)
+	~void writeln()
+}
+class ProposedCombinationView [[java:usantatecla.mastermind.views.ProposedCombinationView]] {
+	-ProposedCombination proposedCombination
+	~ProposedCombinationView(ProposedCombination proposedCombination)
+	~void write()
+	~void read()
+	+ProposedCombination readProposedCombination()
+}
+class RedoCommand [[java:usantatecla.mastermind.views.RedoCommand]] {
+	~RedoCommand(PlayController playController)
+	#void execute()
+	#boolean isActive()
+}
+class Command [[java:usantatecla.mastermind.views.Command]] {
+}
+Command <|-- RedoCommand
+class PlayView [[java:usantatecla.mastermind.views.PlayView]] {
+	~void interact(PlayController playController)
+}
+class GameView [[java:usantatecla.mastermind.views.GameView]] {
+	~GameView(PlayController playController)
+}
+class StartView [[java:usantatecla.mastermind.views.StartView]] {
+	~void interact(StartController startController)
+}
+class Console [[java:usantatecla.utils.Console]] {
+}
+Console <|-- StartView
+class PlayMenu [[java:usantatecla.mastermind.views.PlayMenu]] {
+	~PlayMenu(PlayController playController)
+}
+class Menu [[java:usantatecla.utils.Menu]] {
+}
+Menu <|-- PlayMenu
+class ColorView [[java:usantatecla.mastermind.views.ColorView]] {
+	-{static}char[] INITIALS
+	-Color color
+	~ColorView(Color color)
+	+{static}String allInitials()
+	+{static}Color getInstance(char character)
+	~void write()
+}
+enum MessageView [[java:usantatecla.mastermind.views.MessageView]] {
+	ATTEMPTS
+	SECRET
+	SEPARATOR
+	RESUME
+	RESULT
+	PROPOSED_COMBINATION
+	TITLE
+	WINNER
+	LOOSER
+	UNDO_COMMAND
+	REDO_COMMAND
+	message
+	-MessageView(String message)
+	+void write()
+	+void writeln()
+	~void writeln(int attempts)
+	~void writeln(int blacks, int whites)
+	+String getMessage()
+}
+abstract class Command [[java:usantatecla.mastermind.views.Command]] {
+	#PlayController playController
+	#Command(String title, PlayController playController)
+}
+class "usantatecla.utils.Command" as usantatecla_utils_Command [[java:usantatecla.utils.Command]] {
+}
+usantatecla_utils_Command <|-- Command
+class ResumeView [[java:usantatecla.mastermind.views.ResumeView]] {
+	~void interact(ResumeController resumeController)
+}
+class SecretCombinationView [[java:usantatecla.mastermind.views.SecretCombinationView]] {
+	~void writeln()
+}
+class ProposeCombinationCommand [[java:usantatecla.mastermind.views.ProposeCombinationCommand]] {
+	~ProposeCombinationCommand(PlayController playController)
+	#void execute()
+	#boolean isActive()
+}
+class Command [[java:usantatecla.mastermind.views.Command]] {
+}
+Command <|-- ProposeCombinationCommand
+class UndoCommand [[java:usantatecla.mastermind.views.UndoCommand]] {
+	~UndoCommand(PlayController playController)
+	#void execute()
+	#boolean isActive()
+}
+class Command [[java:usantatecla.mastermind.views.Command]] {
+}
+Command <|-- UndoCommand
+@enduml

@@ -1,0 +1,56 @@
+@startuml pkt_mastermind_controllers_implementation
+package mastermind.controllers.implementation{
+class LogicImplementation [[java:usantatecla.mastermind.controllers.implementation.LogicImplementation]] {
+	+LogicImplementation()
+}
+class StartControllerImplementation [[java:usantatecla.mastermind.controllers.implementation.StartControllerImplementation]] {
+}
+LogicImplementation --> "1" StartControllerImplementation : startControllerImplementation
+class PlayControllerImplementation [[java:usantatecla.mastermind.controllers.implementation.PlayControllerImplementation]] {
+}
+LogicImplementation --> "1" PlayControllerImplementation : playControllerImplementation
+class ResumeControllerImplementation [[java:usantatecla.mastermind.controllers.implementation.ResumeControllerImplementation]] {
+}
+LogicImplementation --> "1" ResumeControllerImplementation : resumeControllerImplementation
+class ResumeControllerImplementation [[java:usantatecla.mastermind.controllers.implementation.ResumeControllerImplementation]] {
+	-SessionImplementation sessionImplementation
+	+ResumeControllerImplementation(Session session)
+	+void resume(boolean newGame)
+}
+class StartControllerImplementation [[java:usantatecla.mastermind.controllers.implementation.StartControllerImplementation]] {
+	~SessionImplementation sessionImplementation
+	+StartControllerImplementation(Session session)
+	+void start()
+}
+class PlayControllerImplementation [[java:usantatecla.mastermind.controllers.implementation.PlayControllerImplementation]] {
+	-GameController gameController
+	-UndoController undoController
+	-RedoController redoController
+	+PlayControllerImplementation(Session session)
+	+void undo()
+	+void redo()
+	+boolean undoable()
+	+boolean redoable()
+	+boolean isWinner()
+	+boolean isLooser()
+	+int getAttempts()
+	+ProposedCombination getProposedCombination(int i)
+	+Result getResult(int i)
+	+void addProposedCombination(ProposedCombination proposedCombination)
+	+void continueState()
+}
+}
+
+package mastermind.controllers {
+	class ResumeController [[java:usantatecla.mastermind.controllers.ResumeController]] 
+	class PlayController [[java:usantatecla.mastermind.controllers.PlayController]] 
+	class StartController [[java:usantatecla.mastermind.controllers.StartController]] 
+	class Logic [[java:usantatecla.mastermind.controllers.Logic]] 
+}
+
+ResumeController <|-- ResumeControllerImplementation
+StartController <|-- StartControllerImplementation
+PlayController <|-- PlayControllerImplementation
+Logic <|-- LogicImplementation
+
+@enduml

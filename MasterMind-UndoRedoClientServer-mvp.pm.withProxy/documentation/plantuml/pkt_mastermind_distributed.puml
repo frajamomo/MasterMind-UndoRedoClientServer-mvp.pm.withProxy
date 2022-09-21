@@ -1,0 +1,37 @@
+@startuml pkt_mastermind_distributed
+class LogicImplementationServer [[java:usantatecla.mastermind.distributed.LogicImplementationServer]] {
+	+void createDispatchers(DispatcherPrototype dispatcherPrototype)
+}
+class LogicImplementation [[java:usantatecla.mastermind.controllers.implementation.LogicImplementation]] {
+}
+LogicImplementation <|-- LogicImplementationServer
+
+class LogicProxy [[java:usantatecla.mastermind.distributed.LogicProxy]] {
+	-TCPIP tcpip
+	+LogicProxy()
+	+void close()
+}
+class Logic [[java:usantatecla.mastermind.controllers.Logic]] {
+}
+Logic <|-- LogicProxy
+class MastermindServer [[java:usantatecla.mastermind.distributed.MastermindServer]] {
+	-DispatcherPrototype dispatcherPrototype
+	-MastermindServer()
+	-void serve()
+	+{static}void main(String[] args)
+}
+class LogicImplementationServer [[java:usantatecla.mastermind.distributed.LogicImplementationServer]] {
+}
+MastermindServer --> "1" LogicImplementationServer : logic
+class MastermindClient [[java:usantatecla.mastermind.distributed.MastermindClient]] {
+	#Logic createLogic()
+	#void play()
+	+{static}void main(String[] args)
+}
+class LogicProxy [[java:usantatecla.mastermind.distributed.LogicProxy]] {
+}
+MastermindClient --> "1" LogicProxy : logicProxy
+class Mastermind [[java:usantatecla.mastermind.Mastermind]] {
+}
+Mastermind <|-- MastermindClient
+@enduml

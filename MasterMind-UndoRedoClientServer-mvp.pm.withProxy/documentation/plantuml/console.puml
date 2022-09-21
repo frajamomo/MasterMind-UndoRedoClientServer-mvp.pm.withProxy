@@ -1,0 +1,16 @@
+@startuml
+class Console [[java:usantatecla.utils.Console]] {
+	-{static}Console console
+	-BufferedReader bufferedReader
+	+{static}Console instance()
+	+String readString(String title)
+	+String readString()
+	+int readInt(String title)
+	+char readChar(String title)
+	+void writeln()
+	+void write(String string)
+	+void writeln(String string)
+	+void write(char character)
+	-void writeError(String format)
+}
+@enduml

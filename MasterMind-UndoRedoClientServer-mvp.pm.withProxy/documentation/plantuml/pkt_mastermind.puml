@@ -1,0 +1,16 @@
+@startuml
+abstract class Mastermind [[java:usantatecla.mastermind.Mastermind]] {
+	-Logic logic
+	-View view
+	#Mastermind()
+	#{abstract}Logic createLogic()
+	#void play()
+}
+class MastermindStandalone [[java:usantatecla.mastermind.MastermindStandalone]] {
+	#Logic createLogic()
+	+{static}void main(String[] args)
+}
+class Mastermind [[java:usantatecla.mastermind.Mastermind]] {
+}
+Mastermind <|-- MastermindStandalone
+@enduml
