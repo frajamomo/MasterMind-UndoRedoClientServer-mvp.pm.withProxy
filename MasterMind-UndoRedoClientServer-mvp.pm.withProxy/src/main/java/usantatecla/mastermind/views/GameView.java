@@ -12,9 +12,9 @@ public class GameView {
         }
 
         if (playController.isWinner()) {
-			MessageView.WINNER.writeln();
-		} else if (playController.isLooser()) {
-			MessageView.LOOSER.writeln();
+            MessageView.WINNER.writeln();
+        } else if (playController.isLooser()) {
+            MessageView.LOOSER.writeln();
         }
     }
     

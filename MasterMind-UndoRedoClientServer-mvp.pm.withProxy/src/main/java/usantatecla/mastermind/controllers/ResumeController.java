@@ -10,8 +10,8 @@ public abstract class ResumeController extends AcceptorController {
 
     public abstract void resume(boolean newGame);
 
-	@Override
-	public void accept(ControllerVisitor controllerVisitor) {
-		controllerVisitor.visit(this);
-	}
+    @Override
+    public void accept(ControllerVisitor controllerVisitor) {
+        controllerVisitor.visit(this);
+    }
 }

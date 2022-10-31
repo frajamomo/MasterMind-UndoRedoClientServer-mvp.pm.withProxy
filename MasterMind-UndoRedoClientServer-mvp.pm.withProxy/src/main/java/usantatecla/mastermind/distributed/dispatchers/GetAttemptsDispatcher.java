@@ -4,12 +4,12 @@ import usantatecla.mastermind.controllers.PlayController;
 
 public class GetAttemptsDispatcher extends Dispatcher {
 
-	public GetAttemptsDispatcher(PlayController playController) {
-		super(playController);
-	}
+    public GetAttemptsDispatcher(PlayController playController) {
+        super(playController);
+    }
 
-	@Override
-	public void dispatch() {
+    @Override
+    public void dispatch() {
         this.tcpip.send(((PlayController)this.acceptorController).getAttempts());
-	}
+    }
 }

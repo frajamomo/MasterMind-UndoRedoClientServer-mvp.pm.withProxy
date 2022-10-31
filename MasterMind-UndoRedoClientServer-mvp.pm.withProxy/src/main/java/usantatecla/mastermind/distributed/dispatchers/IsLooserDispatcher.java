@@ -12,5 +12,4 @@ public class IsLooserDispatcher extends Dispatcher {
 	public void dispatch() {
         this.tcpip.send(((PlayController)this.acceptorController).isLooser());
 	}
-
 }

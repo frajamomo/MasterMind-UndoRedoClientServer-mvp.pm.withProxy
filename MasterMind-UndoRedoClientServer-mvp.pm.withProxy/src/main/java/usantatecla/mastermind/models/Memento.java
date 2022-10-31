@@ -52,5 +52,4 @@ public class Memento {
     int getAttempts(){
         return this.attemps;
     }
-    
 }

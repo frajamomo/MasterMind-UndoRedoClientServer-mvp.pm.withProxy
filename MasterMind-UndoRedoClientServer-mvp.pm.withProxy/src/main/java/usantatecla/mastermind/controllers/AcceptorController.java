@@ -9,5 +9,4 @@ public abstract class AcceptorController extends Controller{
     }
 
     public abstract void accept(ControllerVisitor controllerVisitor);
-
 }

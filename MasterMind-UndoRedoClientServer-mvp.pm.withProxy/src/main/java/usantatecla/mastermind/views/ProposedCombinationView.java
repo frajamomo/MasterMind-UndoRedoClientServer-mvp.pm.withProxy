@@ -7,52 +7,52 @@ import usantatecla.mastermind.models.ProposedCombination;
 import usantatecla.utils.Console;
 
 class ProposedCombinationView {
-	
-	private ProposedCombination proposedCombination;
+    
+    private ProposedCombination proposedCombination;
 
-	ProposedCombinationView(ProposedCombination proposedCombination) {
-		this.proposedCombination = proposedCombination;
-	}
+    ProposedCombinationView(ProposedCombination proposedCombination) {
+        this.proposedCombination = proposedCombination;
+    }
 
-	void write() {
-		for (Color color: this.proposedCombination.getColors()) {
-			new ColorView(color).write();
-		}
-	}
+    void write() {
+        for (Color color: this.proposedCombination.getColors()) {
+            new ColorView(color).write();
+        }
+    }
 
-	void read() {
-		Error error;
-		do {
-			Console console = Console.instance();
-			error = null;
-			MessageView.PROPOSED_COMBINATION.write();
-			String characters = console.readString();
-			if (characters.length() > Combination.getWidth()) {
-				error = Error.WRONG_LENGTH;
-			} else {
-				for (int i = 0; i < characters.length(); i++) {
-					Color color = ColorView.getInstance(characters.charAt(i));
-					if (color == null) {
-						error = Error.WRONG_CHARACTERS;
-					} else {
-						if (this.proposedCombination.getColors().contains(color)) {
-							error = Error.DUPLICATED;
-						} else {
-							this.proposedCombination.getColors().add(color);
-						}
-					}
-				}
-			}
-			if (error != null) {
-				new ErrorView(error).writeln();
-				this.proposedCombination.getColors().clear();
-			}
-		} while (error != null);
-	}
+    void read() {
+        Error error;
+        do {
+            Console console = Console.instance();
+            error = null;
+            MessageView.PROPOSED_COMBINATION.write();
+            String characters = console.readString();
+            if (characters.length() > Combination.getWidth()) {
+                error = Error.WRONG_LENGTH;
+            } else {
+                for (int i = 0; i < characters.length(); i++) {
+                    Color color = ColorView.getInstance(characters.charAt(i));
+                    if (color == null) {
+                        error = Error.WRONG_CHARACTERS;
+                    } else {
+                        if (this.proposedCombination.getColors().contains(color)) {
+                            error = Error.DUPLICATED;
+                        } else {
+                            this.proposedCombination.getColors().add(color);
+                        }
+                    }
+                }
+            }
+            if (error != null) {
+                new ErrorView(error).writeln();
+                this.proposedCombination.getColors().clear();
+            }
+        } while (error != null);
+    }
 
-	public ProposedCombination readProposedCombination(){
-		this.read();
-		return this.proposedCombination;
-	}
+    public ProposedCombination readProposedCombination(){
+        this.read();
+        return this.proposedCombination;
+    }
 
 }

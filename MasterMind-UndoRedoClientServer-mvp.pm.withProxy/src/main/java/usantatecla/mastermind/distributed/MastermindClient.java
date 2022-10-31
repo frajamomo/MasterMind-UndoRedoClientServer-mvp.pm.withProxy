@@ -21,5 +21,4 @@ public class MastermindClient extends Mastermind{
     public static void main(String[] args) {
         new MastermindClient().play();
     }
-    
 }

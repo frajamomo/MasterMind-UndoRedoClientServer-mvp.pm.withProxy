@@ -11,5 +11,4 @@ public class StartDispatcher extends Dispatcher {
     public void dispatch() {
         ((StartController) this.acceptorController).start();
     }
-
 }

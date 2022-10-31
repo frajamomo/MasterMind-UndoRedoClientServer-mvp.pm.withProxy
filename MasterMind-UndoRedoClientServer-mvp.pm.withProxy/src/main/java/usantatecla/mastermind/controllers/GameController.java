@@ -18,7 +18,7 @@ public class GameController extends Controller{
         return this.sessionImplementation.getAttemps();
     }
 
-	public void addProposedCombination(ProposedCombination proposedCombination) {
+    public void addProposedCombination(ProposedCombination proposedCombination) {
         this.sessionImplementation.addProposedCombination(proposedCombination);
     }
 
@@ -30,16 +30,15 @@ public class GameController extends Controller{
         return this.sessionImplementation.isLooser();
     }
 
-	public ProposedCombination getProposedCombination(int i) {
+    public ProposedCombination getProposedCombination(int i) {
         return this.sessionImplementation.getProposedCombination(i);
-	}
+    }
 
-	public Result getResult(int i) {
-		return this.sessionImplementation.getResult(i);
-	}
+    public Result getResult(int i) {
+        return this.sessionImplementation.getResult(i);
+    }
 
-	public void continueState() {
+    public void continueState() {
         this.sessionImplementation.next();
-	}
-
+    }
 }

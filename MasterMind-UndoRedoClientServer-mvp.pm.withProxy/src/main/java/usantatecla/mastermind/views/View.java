@@ -33,5 +33,4 @@ public class View implements ControllerVisitor{
     public void visit (ResumeController resumeController) {
         this.resumeView.interact(resumeController);
     }
-
 }

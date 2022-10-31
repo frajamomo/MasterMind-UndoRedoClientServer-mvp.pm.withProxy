@@ -6,17 +6,16 @@ import usantatecla.mastermind.models.Session;
 import usantatecla.utils.TCPIP;
 
 public class StartControllerProxy extends StartController {
-	
-	private TCPIP tcpip;
+    
+    private TCPIP tcpip;
 
-	public StartControllerProxy(Session session, TCPIP tcpip) {
-		super(session);
-		this.tcpip = tcpip;
-	}
+    public StartControllerProxy(Session session, TCPIP tcpip) {
+        super(session);
+        this.tcpip = tcpip;
+    }
 
-	@Override
-	public void start() {
-		this.tcpip.send(FrameType.START.name());
-	}
-
+    @Override
+    public void start() {
+        this.tcpip.send(FrameType.START.name());
+    }
 }
